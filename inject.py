@@ -1,4 +1,6 @@
 import mysql.connector
+import os
+import re
 
 
 def create_database(cursor, db_name):
@@ -9,26 +11,12 @@ def create_tables(cursor):
     # Define your table creation queries here
     table_queries = [
         """
-        CREATE TABLE IF NOT EXISTS Books (
-            book_id INT AUTO_INCREMENT PRIMARY KEY,
-            book_name VARCHAR(255) NOT NULL
-        );
-        """,
-        """
-        CREATE TABLE IF NOT EXISTS Chapters (
-            chapter_id INT AUTO_INCREMENT PRIMARY KEY,
-            book_id INT,
-            chapter_number INT,
-            FOREIGN KEY (book_id) REFERENCES Books(book_id)
-        );
-        """,
-        """
         CREATE TABLE IF NOT EXISTS Verses (
             verse_id INT AUTO_INCREMENT PRIMARY KEY,
-            chapter_id INT,
+            book_name VARCHAR(255) NOT NULL,
+            chapter_number INT,
             verse_number INT,
-            verse_text TEXT,
-            FOREIGN KEY (chapter_id) REFERENCES Chapters(chapter_id)
+            verse_text TEXT
         );
         """
     ]
@@ -38,40 +26,55 @@ def create_tables(cursor):
 
 
 def insert_verse(cursor, book_name, chapter_number, verse_number, verse_text):
-    # Assuming you have a Books table with book_name
+    # insert verse into the verse table
     cursor.execute(
-        "SELECT book_id FROM Books WHERE book_name = %s", (book_name,))
-    book_id = cursor.fetchone()
+        "INSERT IGNORE INTO Verses (book_name, chapter_number, verse_number, verse_text) VALUES (%s, %s, %s, %s)",
+        (book_name, chapter_number, verse_number, verse_text)
+    )
 
-    if book_id:
-        # Assuming you have a Chapters table with book_id and chapter_number
-        cursor.execute(
-            "SELECT chapter_id FROM Chapters WHERE book_id = %s AND chapter_number = %s",
-            (book_id[0], chapter_number)
-        )
-        chapter_id = cursor.fetchone()
 
-        if chapter_id:
-            # Insert the verse into the Verses table
-            cursor.execute(
-                "INSERT INTO Verses (chapter_id, verse_number, verse_text) VALUES (%s, %s, %s)",
-                (chapter_id[0], verse_number, verse_text)
-            )
+def get_verse():
+    # Parses the verses.txt file and returns a list of verses
+    verses = []
+    count = 0
+    with open("verses.txt", 'r') as file:
+        for line in file:
+            if count % 2 == 0:
+                # Refactor with regular expressions later
+                text = line[:line.index('--')].strip()
+                label = line[line.index('--')+2:].strip()
+                *book, cv = label.split(" ")
+                book = "-".join(book)
+                chapter, verse = cv.split(":")
+
+                # figure out solution to ensure book name consistency
+
+                # Append the verse information to the list
+                verses.append({
+                    'book': book,
+                    'chapter': int(chapter),
+                    'verse': int(verse),
+                    'text': text
+                })
+            count += 1
+
+    return verses
 
 
 def main():
     # Database connection parameters
     host = 'localhost'
-    user = 'your_username'
-    password = 'your_password'
-    database = 'nasb_bible'
+    port = 3306
+    user = 'root'
+    password = os.getenv('PW')
+    database = "bible"
 
-    # Connect to MySQL
+    # connect to mySQL
     connection = mysql.connector.connect(
         host=host,
         user=user,
-        password=password,
-        database=database
+        database="bible",
+        password='VerySecureSecret62'
     )
 
     cursor = connection.cursor()
@@ -81,14 +84,11 @@ def main():
     cursor.execute(f"USE {database};")
     create_tables(cursor)
 
-    # Parse your text file and insert verses
-    with open('bible_verses.txt', 'r') as file:
-        for line in file:
-            # Assuming your text file is formatted with book, chapter, verse, and text separated by commas
-            book, chapter, verse, text = line.strip().split(',')
-            insert_verse(cursor, book, int(chapter), int(verse), text)
+    for entry in get_verse():
+        insert_verse(
+            cursor, entry["book"], entry["chapter"], entry["verse"], entry["text"])
 
-    # Commit the changes and close the connection
+    # # Commit the changes and close the connection
     connection.commit()
     connection.close()
 
