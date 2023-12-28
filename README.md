@@ -21,17 +21,18 @@ The project is implemented using Python, Express.js, and MySQL.
 
 ### Example Request:
 
-'''
+```
 http://localhost:3333/api/v1/verse?book=John&chapter=3&verse=16
-'''
+
+```
 
 ### Example Response:
 
-'''
+```
 {
 "book": "John",
 "chapter": 3,
 "verse": 16,
 "text": "For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."
 }
-'''
+```
