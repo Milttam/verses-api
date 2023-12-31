@@ -3,6 +3,6 @@ const router = express.Router();
 const bibleController = require('../controllers/bible.controller.js');
 
 /* GET operation */
-router.get('/find/:book/:chap/:verse', bibleController.getVerse);
+router.get('/find', bibleController.getVerse);
 
 module.exports = router;
