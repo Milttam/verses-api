@@ -19,3 +19,13 @@ exports.getVerse = (req, res) => {
     } else res.send(data);
   });
 };
+
+exports.generateKey = (req, res) => {
+  Bible.generateKey(req, (err,data) => {
+    if (err) {
+      res.status(500).send({
+        message: "Error while key generation"
+      })
+    } else res.send(data);
+  })
+}
