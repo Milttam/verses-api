@@ -41,7 +41,8 @@ Bible.generateKey = (req, result) => {
       result(err, null);
       return;
     }
-
+    console.log(apiKey);
+    console.log(hashedApiKey);
     // Create the `ApiKeys` table if it doesn't exist
     let createTableQuery = `
       CREATE TABLE IF NOT EXISTS ApiKeys (
@@ -65,18 +66,17 @@ Bible.generateKey = (req, result) => {
         console.log("Error creating table: ", err);
         result(err, null);
         return;
-      }    });
-
-    cxn.query(insertUpdateQuery, [hashedApiKey, "admin"], (err, res) => {
-      if (err) {
-        console.log("Error generating API key: ", err);
-        result(err, null);
-        return;
-      }
-
-      result(null, { apiKey }); // Return the unhashed API key to the user
+      }    
+      cxn.query(insertUpdateQuery, [hashedApiKey], (err, res) => {
+        if (err) {
+          console.log("Error generating API key: ", err);
+          result(err, null);
+          return;
+        }
+  
+        result(null, { apiKey }); // Return the unhashed API key to the user
+      });
     });
-
   });
 };
 

@@ -9,8 +9,8 @@ The project is implemented using Python, Express.js, and MySQL.
 - [x] Inject Verses into MySQL
 - [x] Create simple GET route and DB connection
 - [x] Add feature: Rate Limiting
-- [ ] Clean up request to use query instead of path params (https://apidog.com/articles/http-request-parameters-guide/)
-- [ ] Add feature: API keys (instead of OAuth)
+- [x] Clean up request to use query instead of path params (https://apidog.com/articles/http-request-parameters-guide/)
+- [x] Add feature: API keys (instead of OAuth)
       (https://blog.logrocket.com/understanding-api-key-authentication-node-js/)
       (https://blog.dreamfactory.com/how-to-secure-rest-apis-api-keys-vs-oauth/)
 - [ ] Create Proxy Server (handle caching, rate limiting, and hide api keys) (https://konghq.com/learning-center/api-management/what-is-an-api-proxy)

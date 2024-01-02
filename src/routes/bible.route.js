@@ -4,11 +4,10 @@ const bibleController = require('../controllers/bible.controller.js');
 const auth = require('../middlewares/index.js');
 
 /* GET operation */
-router.get('/find', bibleController.getVerse);
 
-// router.get('/find, auth, bibleController.getVerse);
+router.get('/find', auth.verifyKey, bibleController.getVerse);
 
 // Generate API key option
-router.get('/generate-key', bibleController.generateKey);
+router.post('/generate-key', bibleController.generateKey);
 
 module.exports = router;
