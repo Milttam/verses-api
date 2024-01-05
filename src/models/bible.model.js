@@ -11,7 +11,7 @@ const Bible = function(bible) {
 
 Bible.getVerse = (b,c,v, result) => {
   let query = "SELECT verse_text FROM Verses WHERE book_name = ? AND chapter_number = ? AND verse_number = ?";
-  //console.log(b)
+
   cxn.query(query, [b, c, v], (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -25,7 +25,6 @@ Bible.getVerse = (b,c,v, result) => {
       return;
     }
 
-    //console.log("verse: ", res);
     result(null, res[0]);
   });
 };
@@ -41,8 +40,8 @@ Bible.generateKey = (req, result) => {
       result(err, null);
       return;
     }
-    console.log(apiKey);
-    console.log(hashedApiKey);
+    // console.log(apiKey);
+    // console.log(hashedApiKey);
     // Create the `ApiKeys` table if it doesn't exist
     let createTableQuery = `
       CREATE TABLE IF NOT EXISTS ApiKeys (
@@ -63,17 +62,16 @@ Bible.generateKey = (req, result) => {
     // Execute the queries one by one
     cxn.query(createTableQuery, (err) => {
       if (err) {
-        console.log("Error creating table: ", err);
+        // console.log("Error creating table: ", err);
         result(err, null);
         return;
       }    
       cxn.query(insertUpdateQuery, [hashedApiKey], (err, res) => {
         if (err) {
-          console.log("Error generating API key: ", err);
+          // console.log("Error generating API key: ", err);
           result(err, null);
           return;
         }
-  
         result(null, { apiKey }); // Return the unhashed API key to the user
       });
     });

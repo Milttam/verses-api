@@ -1,7 +1,7 @@
 # Verses-API
 
 Verses-API is a simple web service that allows users to fetch bible verses using
-query parameters of book, chapter, and verse.
+query parameters of a book, chapter, and verse of the 1995 NASB translation.
 The project is implemented using Python, Express.js, and MySQL.
 
 ### TODO/Future Progress
@@ -13,6 +13,7 @@ The project is implemented using Python, Express.js, and MySQL.
 - [x] Add feature: API keys (instead of OAuth)
       (https://blog.logrocket.com/understanding-api-key-authentication-node-js/)
       (https://blog.dreamfactory.com/how-to-secure-rest-apis-api-keys-vs-oauth/)
+- [ ] Add feature: user IDs
 - [ ] Create Proxy Server (handle caching, rate limiting, and hide api keys) (https://konghq.com/learning-center/api-management/what-is-an-api-proxy)
 - [ ] Deploy MySQL database (https://www.youtube.com/watch?v=lwOsI8LtVEQ, https://www.youtube.com/watch?v=uEVmD6n8Il0)
 - [ ] Deploy vanilla API (https://codedamn.com/news/application-programming-interface/host-your-api)
