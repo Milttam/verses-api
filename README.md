@@ -13,6 +13,7 @@ The project is implemented using Python, Express.js, and MySQL.
 - [x] Add feature: API keys (instead of OAuth)
       (https://blog.logrocket.com/understanding-api-key-authentication-node-js/)
       (https://blog.dreamfactory.com/how-to-secure-rest-apis-api-keys-vs-oauth/)
+- [x] Add feature: Passages by chapter
 - [ ] Add feature: user IDs
 - [ ] Create Proxy Server (handle caching, rate limiting, and hide api keys) (https://konghq.com/learning-center/api-management/what-is-an-api-proxy)
 - [ ] Deploy MySQL database (https://www.youtube.com/watch?v=lwOsI8LtVEQ, https://www.youtube.com/watch?v=uEVmD6n8Il0)

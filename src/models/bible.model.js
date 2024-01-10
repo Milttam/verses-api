@@ -1,6 +1,7 @@
 const cxn = require("./db.js");
 const { generateApiKey } = require('generate-api-key');
-const bcrypt = require("bcrypt")
+const bcrypt = require("bcrypt");
+const e = require("express");
 
 // constructor
 const Bible = function(bible) {
@@ -14,7 +15,7 @@ Bible.getVerse = (b,c,v, result) => {
 
   cxn.query(query, [b, c, v], (err, res) => {
     if (err) {
-      console.log("error: ", err);
+      //.log("error: ", err);
       result(err, null);
       return;
     }
@@ -28,6 +29,23 @@ Bible.getVerse = (b,c,v, result) => {
     result(null, res[0]);
   });
 };
+
+Bible.getChapter = (b, c, result) => {
+  // SQL request which will get all the verses with requested book and chapter
+  let query = "SELECT verse_text FROM Verses WHERE book_name = ? AND chapter_number = ?;"
+
+  cxn.query(query, [b, c], (err, res)=>{
+    // handle logic for response for response of the SQL request
+    if (err) {
+      result(err, null)
+      return;
+    }
+
+    // The reseult will be a list of 
+    console.log(res)
+    result(null, res)
+  })
+}
 
 Bible.generateKey = (req, result) => {
   // Generate a random API key

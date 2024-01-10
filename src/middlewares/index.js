@@ -17,12 +17,9 @@ const verifyKey = async (req, res, next) => {
       bcrypt.compare(apiKey, result[i].hashed_api_key, (e,isMatch)=>{
         try {
           if (isMatch) {
-            //console.log("success!")
-            //res(null, true)
             next();
           } 
         } catch (e){
-          //console.log("Error comparing keys")
           res.status(500).json({message: e.message})
         }
       })

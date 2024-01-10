@@ -5,7 +5,7 @@ const auth = require('../middlewares/index.js');
 
 /* GET operation */
 
-router.get('/find', auth.verifyKey, bibleController.getVerse);
+router.get('/find', auth.verifyKey, bibleController.getPassage);
 
 // Generate API key option
 router.post('/generate-key', bibleController.generateKey);
