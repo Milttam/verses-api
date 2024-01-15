@@ -38,7 +38,7 @@ exports.getPassage = (req, res) => {
       } else {
         result = []
         for (let i = 0; i<data.length; i++){
-          result.push(data[i]);
+          result.push(data[i].verse_text);
         }
 
         res.send({

@@ -24,19 +24,80 @@ The project is implemented using Python, Express.js, and MySQL.
 - [ ] Deploy Proxy Server
 - [ ] Refactor Vanilla API to handle passages, chapters, versions, and Refactor DB structure to allow for tables for each book/version, etc
 
-### Example Request:
+# Example Usage
+
+### Info Request:
 
 ```
-http://localhost:3333/api/v1/verse?book=John&chapter=3&verse=16
+http://localhost:3000/api/bible/info
 ```
 
-### Example Response:
+### Info Response:
 
 ```
 {
-  "book": "John",
-  "chapter": 3,
-  "verse": 16,
-  "text": "For God so loved the world, that he gave his only Son, that whoever believes in him should not perish but have eternal life."
+    "result": {
+        "number_of_books": 66,
+        "book_info": [
+            {
+                "book_name": "1-chronicles",
+                "number_of_chapters": 29
+            },
+            {
+                "book_name": "1-corinthians",
+                "number_of_chapters": 16
+            },
+            {
+                "book_name": "1-john",
+                "number_of_chapters": 5
+            },
+            ...
+        ]
+    }
+}
+```
+
+### Verse Request:
+
+```
+http://localhost:3333/api/bible/find?book=hebrews&chap=1&verse=1
+```
+
+### Verse Response:
+
+```
+{
+    "result": {
+        "type": "verse",
+        "description": "hebrews 1:1",
+        "text": [
+            "God, after He spoke long ago to the fathers in the prophets in many portions and in many ways,"
+        ]
+    }
+}
+```
+
+### Chapter Request
+
+```
+http://localhost:3333/api/bible/find?book=romans&chap=1
+```
+
+### Chapter Response
+
+```
+{
+    "result": {
+        "type": "chapter",
+        "description": "romans 1",
+        "text": [
+            "Paul, a bond-servant of Christ Jesus, called as an apostle, set apart for the gospel of God,",
+            "which He promised beforehand through His prophets in the holy Scriptures,",
+            "concerning His Son, who was born of a descendant of David according to the flesh,",
+            "who was declared the Son of God with power by the resurrection from the dead, according to the Spirit of holiness, Jesus Christ our Lord,",
+            "through whom we have received grace and apostleship to bring about the obedience of faith among all the Gentiles for His name's sake,",
+            ...
+        ]
+    }
 }
 ```
