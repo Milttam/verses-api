@@ -5,7 +5,6 @@ exports.getPassage = (req, res) => {
   let book = req.query.book;
   let chap = req.query.chap;
   let verse = req.query.verse;
-  console.log(verse)
   if (book && chap && verse) {
     Bible.getVerse(book, chap, verse, (err, data) => {
       if (err) {
@@ -29,7 +28,6 @@ exports.getPassage = (req, res) => {
       };
     });
   } else if (book && chap && !verse) {
-    console.log("got to branch")
     Bible.getChapter(book, chap, (err, data) =>{
       console.log(data)
       if (err) {
@@ -42,7 +40,7 @@ exports.getPassage = (req, res) => {
         for (let i = 0; i<data.length; i++){
           result.push(data[i]);
         }
-        
+
         res.send({
           result: {
             type: "chapter",
@@ -62,5 +60,22 @@ exports.generateKey = (req, res) => {
         message: "Error while key generation"
       })
     } else res.send(data);
+  })
+}
+
+exports.getInfo = (req, res) => {
+  Bible.getInfo((err, data) => {
+    if (err){
+      res.status(500).send({
+        message: "Error while getting information"
+      })
+    } else {
+      res.send({
+        result: {
+          number_of_books:data.length,
+          book_info:data
+        }
+      })
+    }
   })
 }

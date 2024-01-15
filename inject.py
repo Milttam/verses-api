@@ -10,6 +10,7 @@ def create_database(cursor, db_name):
 def create_tables(cursor):
     # Define your table creation queries here
     table_queries = [
+        "DELETE FROM Verses;",
         """
         CREATE TABLE IF NOT EXISTS Verses (
             verse_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -41,8 +42,8 @@ def get_verse():
         for line in file:
             if count % 2 == 0:
                 # Refactor with regular expressions later
-                text = line[:line.index('--')].strip()
-                label = line[line.index('--')+2:].strip()
+                text = line[:line.rfind('--')].strip()
+                label = line[line.rfind('--')+2:].strip()
                 *book, cv = label.split(" ")
                 book = "-".join(book)
                 chapter, verse = cv.split(":")

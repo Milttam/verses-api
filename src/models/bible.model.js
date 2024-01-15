@@ -1,7 +1,6 @@
 const cxn = require("./db.js");
 const { generateApiKey } = require('generate-api-key');
 const bcrypt = require("bcrypt");
-const e = require("express");
 
 // constructor
 const Bible = function(bible) {
@@ -95,6 +94,27 @@ Bible.generateKey = (req, result) => {
     });
   });
 };
+
+Bible.getInfo = (result=>{
+  // Gets information such as the unique book name along with number of chapters
+  let query = 
+  `
+    SELECT book_name, COUNT(DISTINCT chapter_number) AS number_of_chapters
+    FROM Verses
+    GROUP BY book_name;
+  `
+
+  cxn.query(query, (err, res)=>{
+    if (err){
+      result(err, null)
+      return;
+    } else {
+      console.log(res)
+      result(null, res)
+      return;
+    }
+  })
+})
 
 
 module.exports = Bible;

@@ -7,6 +7,8 @@ const auth = require('../middlewares/index.js');
 
 router.get('/find', auth.verifyKey, bibleController.getPassage);
 
+router.get('/info', bibleController.getInfo);
+
 // Generate API key option
 router.post('/generate-key', bibleController.generateKey);
 

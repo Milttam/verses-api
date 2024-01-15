@@ -14,10 +14,13 @@ The project is implemented using Python, Express.js, and MySQL.
       (https://blog.logrocket.com/understanding-api-key-authentication-node-js/)
       (https://blog.dreamfactory.com/how-to-secure-rest-apis-api-keys-vs-oauth/)
 - [x] Add feature: Passages by chapter
-- [ ] Add feature: user IDs
-- [ ] Create Proxy Server (handle caching, rate limiting, and hide api keys) (https://konghq.com/learning-center/api-management/what-is-an-api-proxy)
+- [x] Fix Bug: verses in database are inaccurate due to "--" bug
+- [ ] HTTPS instead of HTTP
+- [ ] Get request By Book
+- [ ] Refactor Rate limiting to handle by key (https://kinsta.com/knowledgebase/api-rate-limit/#:~:text=One%20of%20the%20ways%20to,requests%20are%20throttled%20or%20denied.)
 - [ ] Deploy MySQL database (https://www.youtube.com/watch?v=lwOsI8LtVEQ, https://www.youtube.com/watch?v=uEVmD6n8Il0)
 - [ ] Deploy vanilla API (https://codedamn.com/news/application-programming-interface/host-your-api)
+- [ ] Create Proxy Server (handle caching, rate limiting, and hide api keys) (https://konghq.com/learning-center/api-management/what-is-an-api-proxy)
 - [ ] Deploy Proxy Server
 - [ ] Refactor Vanilla API to handle passages, chapters, versions, and Refactor DB structure to allow for tables for each book/version, etc
 
