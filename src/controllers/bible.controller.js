@@ -18,7 +18,15 @@ exports.getPassage = (req, res) => {
             message:  `Error recieved for verse ${book} ${chap}:${verse}.`
           });
         }
-      } else res.send(data);
+      } else {
+        res.send({
+          result:{
+            type: "verse",
+            description: `${book} ${chap}:${verse}`,
+            text: [data.verse_text]
+          }
+        })
+      };
     });
   } else if (book && chap && !verse) {
     console.log("got to branch")
@@ -26,8 +34,22 @@ exports.getPassage = (req, res) => {
       console.log(data)
       if (err) {
         // logic for error
+        res.status(500).send({
+          message: `Error recieved for passage ${book} ${chap}`
+        })
       } else {
-        res.send(data);
+        result = []
+        for (let i = 0; i<data.length; i++){
+          result.push(data[i]);
+        }
+        
+        res.send({
+          result: {
+            type: "chapter",
+            description: `${book} ${chap}`,
+            text: result
+          }
+        });
       }
     })
   }
